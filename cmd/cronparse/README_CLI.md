@@ -24,6 +24,8 @@ cronparse [flags] "<cron expression>"
 Flags:
   -n int
         number of next run times to display (default 5)
+  -from string
+        start time for forecasting in RFC3339 format (default: current time)
 ```
 
 ## Examples
@@ -52,6 +54,18 @@ Next 3 runs (from 2024-01-15 10:30:00):
   1. 2024-01-16 09:00:00 (Tue)
   2. 2024-01-17 09:00:00 (Wed)
   3. 2024-01-18 09:00:00 (Thu)
+```
+
+### Forecast from a specific time
+```bash
+$ cronparse -n 3 -from 2024-06-01T00:00:00Z "0 0 * * 0"
+Expression : 0 0 * * 0
+Description: at 00:00, only on Sunday
+
+Next 3 runs (from 2024-06-01 00:00:00):
+  1. 2024-06-02 00:00:00 (Sun)
+  2. 2024-06-09 00:00:00 (Sun)
+  3. 2024-06-16 00:00:00 (Sun)
 ```
 
 ## Cron Expression Format

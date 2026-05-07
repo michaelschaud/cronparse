@@ -54,3 +54,17 @@ func TestFormatText_AllFieldsPresent(t *testing.T) {
 		}
 	}
 }
+
+func TestFormatMarkdown_AllFieldsPresent(t *testing.T) {
+	b, err := explain.Explain("30 9 15 3 5")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	out := explain.FormatMarkdown(b)
+	expectedFields := []string{"Minute", "Hour", "Day-of-Month", "Month", "Day-of-Week"}
+	for _, f := range expectedFields {
+		if !strings.Contains(out, f) {
+			t.Errorf("expected field %q in markdown output", f)
+		}
+	}
+}

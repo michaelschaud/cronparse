@@ -107,3 +107,22 @@ func TestCheck_InvalidRange(t *testing.T) {
 		})
 	}
 }
+
+// TestCheck_ValidResultHasNoErrors ensures that a valid result never carries
+// stale error entries, so callers can rely on len(res.Errors) == 0 as an
+// equivalent signal to res.Valid == true.
+func TestCheck_ValidResultHasNoErrors(t *testing.T) {
+	cases := []string{
+		"* * * * *",
+		"0 12 * * *",
+		"*/5 * * * *",
+	}
+	for _, expr := range cases {
+		t.Run(expr, func(t *testing.T) {
+			res := validate.Check(expr)
+			if res.Valid && len(res.Errors) != 0 {
+				t.Errorf("valid result should have no errors, got %v", res.Errors)
+			}
+		})
+	}
+}

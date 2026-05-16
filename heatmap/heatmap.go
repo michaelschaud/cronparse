@@ -83,3 +83,13 @@ func (m *Map) Peak() Cell {
 	}
 	return best
 }
+
+// TotalFires returns the total number of times the expression fires across
+// all buckets in the heatmap window.
+func (m *Map) TotalFires() int {
+	total := 0
+	for _, c := range m.Cells {
+		total += c.Count
+	}
+	return total
+}
